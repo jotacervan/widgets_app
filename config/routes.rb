@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'widget#index'
+
+  # //NOTE: make sure to keep the line below the last line of the routes.
+  get '*widget', to: 'widget#index'
 end
