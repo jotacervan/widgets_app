@@ -1,4 +1,9 @@
 class ApplicationController < ActionController::Base
+  # //MARK: Init Service
+  def init_service
+    @service = WidgetApiService.new(authentication_token)
+  end
+
   # //MARK: Get Authentication Token
   def authentication_token
     if session[:authentication_token]

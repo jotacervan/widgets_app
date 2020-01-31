@@ -130,8 +130,4 @@ class Api::V1::UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:first_name, :last_name, :password, :current_password, :new_password, :email, :image_url)
     end
-
-    def init_service
-      @service = WidgetApiService.new(authentication_token)
-    end
 end
