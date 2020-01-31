@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :auth, only: [:create]
       post 'auth/revoke', to: 'auth#revoke'
       get  'users/me', to: 'users#show_me'
+      get  'users/:id/widgets', to: 'users#get_widgets'
       get  'users/me/check_email', to: 'users#check_email'
       post 'users/reset_password', to: 'users#reset_password'
       post 'users/change_password', to: 'users#change_password'

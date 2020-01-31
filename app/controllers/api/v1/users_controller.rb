@@ -34,6 +34,21 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # //MARK: User me widget
+  def get_widgets
+    begin
+      payload = client_id_secret
+      payload[:term] = params[:term] if params[:term]
+      response = @service.users["/#{params[:id]}/widgets"].get({params: payload})
+      
+      data = check_response(response)
+
+      render json: data
+    rescue => e
+      exception_handler_func(e)
+    end
+  end
+
   # //MARK: User Show Me
   def show_me
     begin
