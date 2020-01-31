@@ -109,24 +109,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
-    def check_response(response)
-      if response.code == 200
-        JSON.parse(response.body)
-      else
-        { error_message: "Some error occured please contact the administrator" }
-      end
-    end
-
-    def check_response_and_refresh_token(response)
-      if response.code == 200
-        data = JSON.parse(response.body)
-        set_auth_sessions(data)
-        data
-      else
-        { error_message: "Some error occured please contact the administrator" }
-      end
-    end
-
     def user_params
       params.require(:user).permit(:first_name, :last_name, :password, :current_password, :new_password, :email, :image_url)
     end

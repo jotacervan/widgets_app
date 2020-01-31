@@ -50,4 +50,24 @@ class ApplicationController < ActionController::Base
     render json: e, status: 401
   end
 
+  # //MARK: Check Response
+  def check_response(response)
+    if response.code == 200
+      JSON.parse(response.body)
+    else
+      { error_message: "Some error occured please contact the administrator" }
+    end
+  end
+
+  # //MARK: Check and refresh token
+  def check_response_and_refresh_token(response)
+    if response.code == 200
+      data = JSON.parse(response.body)
+      set_auth_sessions(data)
+      data
+    else
+      { error_message: "Some error occured please contact the administrator" }
+    end
+  end
+
 end

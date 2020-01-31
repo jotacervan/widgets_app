@@ -1,9 +1,10 @@
 class WidgetApiService
-  attr_reader :authentication_token, :base_url
+  attr_reader :authentication_token, :base_url, :auth_url
 
   def initialize(authentication_token = nil)
     @authentication_token = authentication_token
     @base_url = 'https://showoff-rails-react-production.herokuapp.com/api/v1'
+    @auth_url = 'https://showoff-rails-react-production.herokuapp.com/'
   end
 
   def headers
@@ -19,7 +20,7 @@ class WidgetApiService
   end
 
   def oauth
-    url = @base_url + '/oauth'
+    url = @auth_url + '/oauth'
     RestClient::Resource.new(url, { headers: headers } )
   end
 
