@@ -1,6 +1,5 @@
 class Api::V1::UsersController < ApplicationController
   before_action :init_service
-  skip_before_action :verify_authenticity_token
 
   # //MARK: User Create
   def create
