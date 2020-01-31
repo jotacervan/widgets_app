@@ -45,8 +45,8 @@ class ApplicationController < ActionController::Base
   end
 
   # //MARK: Exception Handler and logout
-  def exception_handler_func(e)
-    session[:authentication_token] = nil
+  def exception_handler_func(e, logout = false)
+    session[:authentication_token] = nil if logout
     render json: e, status: 401
   end
 
@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
     if response.code == 200
       data = JSON.parse(response.body)
       set_auth_sessions(data)
-      data
+      data["data"]
     else
       { error_message: "Some error occured please contact the administrator" }
     end

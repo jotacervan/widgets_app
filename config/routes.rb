@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       get  'users/me/check_email', to: 'users#check_email'
       post 'users/reset_password', to: 'users#reset_password'
       post 'users/change_password', to: 'users#change_password'
+
+      resources :widgets, only: [:create, :update, :index, :destroy]
+      get "widgets/visible", to: "widgets#visible"
     end
   end
   root 'widget#index'

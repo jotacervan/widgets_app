@@ -14,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
 
       render json: data
     rescue Exception => e
-      exception_handler_func(e)
+      exception_handler_func(e,true)
     end
   end
 
@@ -72,7 +72,7 @@ class Api::V1::UsersController < ApplicationController
 
       render json: data
     rescue Exception => e
-      exception_handler_func(e)
+      exception_handler_func(e,true)
     end
   end
 
