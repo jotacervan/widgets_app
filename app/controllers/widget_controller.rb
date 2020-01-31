@@ -1,5 +1,5 @@
 class WidgetController < ApplicationController
   def index
-    @logged = session[:auth_token].present?
+    @logged = session[:authentication_token].present?
   end
 end

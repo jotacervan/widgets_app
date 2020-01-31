@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      post 'users/create'
-      get 'users/update'
-      get 'users/show'
-      get 'users/change_password'
-      get 'users/check_email'
-      get 'users/reset_password'
+      resources :users, only: [:create, :update, :show]
+      get  'users/me', to: 'users#show_me'
+      get  'users/me/check_email', to: 'users#check_email'
+      post  'users/reset_password', to: 'users#reset_password'
+      post 'users/change_password', to: 'users#change_password'
     end
   end
   root 'widget#index'
