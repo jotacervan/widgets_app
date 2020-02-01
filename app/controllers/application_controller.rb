@@ -53,9 +53,10 @@ class ApplicationController < ActionController::Base
   # //MARK: Check Response
   def check_response(response)
     if response.code == 200
-      JSON.parse(response.body)
+      data = JSON.parse(response.body)
+      data["data"]
     else
-      { error_message: "Some error occured please contact the administrator" }
+      { message: "Some error occured please contact the administrator" }
     end
   end
 
@@ -66,7 +67,7 @@ class ApplicationController < ActionController::Base
       set_auth_sessions(data)
       data["data"]
     else
-      { error_message: "Some error occured please contact the administrator" }
+      { message: "Some error occured please contact the administrator" }
     end
   end
 

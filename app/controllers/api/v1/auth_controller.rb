@@ -10,11 +10,10 @@ class Api::V1::AuthController < ApplicationController
         "password": params[:password]
       }.merge(client_id_secret)
 
-      response = @service.oauth['/token'].post(payload)
-      
-      data = check_response_and_refresh_token(response)
-
-      render json: data
+      @service.oauth['/token'].post(payload) { |response| 
+        data = check_response_and_refresh_token(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end
@@ -26,12 +25,11 @@ class Api::V1::AuthController < ApplicationController
       payload = {
         token: authentication_token
       }
-      response = @service.oauth['/revoke'].post(payload)
-      
-      data = check_response(response)
-      session.clear
-
-      render json: data
+      response = @service.oauth['/revoke'].post(payload) { |response| 
+        data = check_response(response) if response.code == 200
+        session.clear
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end

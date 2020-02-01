@@ -7,11 +7,10 @@ class Api::V1::UsersController < ApplicationController
       payload = { 
         user: user_params.as_json
       }.merge(client_id_secret)
-      response = @service.users.post(payload)
-
-      data = check_response_and_refresh_token(response)
-
-      render json: data
+      @service.users.post(payload) { |response| 
+        data = check_response_and_refresh_token(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue Exception => e
       exception_handler_func(e,true)
     end
@@ -23,11 +22,10 @@ class Api::V1::UsersController < ApplicationController
       payload = { 
         user: user_params.as_json 
       }
-      response = @service.users["/me"].put(payload)
-
-      data = check_response(response)
-
-      render json: data
+      @service.users["/me"].put(payload) { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue Exception => e
       exception_handler_func(e)
     end
@@ -38,11 +36,10 @@ class Api::V1::UsersController < ApplicationController
     begin
       payload = client_id_secret
       payload[:term] = params[:term] if params[:term]
-      response = @service.users["/#{params[:id]}/widgets"].get({params: payload})
-      
-      data = check_response(response)
-
-      render json: data
+      @service.users["/#{params[:id]}/widgets"].get({params: payload}) { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end
@@ -51,11 +48,10 @@ class Api::V1::UsersController < ApplicationController
   # //MARK: User Show Me
   def show_me
     begin
-      response = @service.users["/me"].get
-
-      data = check_response(response)
-
-      render json: data
+      @service.users["/me"].get { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue Exception => e
       exception_handler_func(e)
     end
@@ -64,11 +60,10 @@ class Api::V1::UsersController < ApplicationController
   # //MARK: User Show (ID)
   def show
     begin
-      response = @service.users["/#{params[:id]}"].get
-
-      data = check_response(response)
-
-      render json: data
+      @service.users["/#{params[:id]}"].get { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue Exception => e
       exception_handler_func(e)
     end
@@ -80,11 +75,10 @@ class Api::V1::UsersController < ApplicationController
       payload = { 
         user: user_params.as_json 
       }
-      response = @service.users["/me/password"].post(payload)
-
-      data = check_response_and_refresh_token(response)
-
-      render json: data
+      @service.users["/me/password"].post(payload) { |response| 
+        data = check_response_and_refresh_token(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue Exception => e
       exception_handler_func(e,true)
     end
@@ -96,11 +90,10 @@ class Api::V1::UsersController < ApplicationController
       payload = { 
         email: user_params['email']
       }.merge(client_id_secret)
-      response = @service.users["/email"].get({params: payload })
-
-      data = check_response(response)
-
-      render json: data
+      @service.users["/email"].get({params: payload }) { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue Exception => e
       exception_handler_func(e)
     end
@@ -112,11 +105,10 @@ class Api::V1::UsersController < ApplicationController
       payload = { 
         user: user_params.as_json 
       }.merge(client_id_secret)
-      response = @service.users["/reset_password"].post(payload)
-
-      data = check_response(response)
-
-      render json: data
+      @service.users["/reset_password"].post(payload) { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue Exception => e
       exception_handler_func(e)
     end

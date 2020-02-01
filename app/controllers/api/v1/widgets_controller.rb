@@ -4,11 +4,10 @@ class Api::V1::WidgetsController < ApplicationController
   # //MARK: Widget Create
   def index
     begin
-      response = @service.widgets.get
-      
-      data = check_response(response)
-
-      render json: data
+      @service.widgets.get { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end
@@ -19,11 +18,10 @@ class Api::V1::WidgetsController < ApplicationController
     begin
       payload = client_id_secret
       payload[:term] = params[:term] if params[:term]
-      response = @service.widgets["/visible"].get({params: payload})
-      
-      data = check_response(response)
-
-      render json: data
+      @service.widgets["/visible"].get({params: payload}) { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end
@@ -35,12 +33,10 @@ class Api::V1::WidgetsController < ApplicationController
       payload = {
         widget: widget_params.as_json
       }
-
-      response = @service.widgets.post(payload)
-      
-      data = check_response(response)
-
-      render json: data
+      @service.widgets.post(payload) { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end
@@ -52,12 +48,10 @@ class Api::V1::WidgetsController < ApplicationController
       payload = {
         widget: widget_params.as_json
       }
-
-      response = @service.widgets["/#{params[:id]}"].put(payload)
-      
-      data = check_response(response)
-
-      render json: data
+      @service.widgets["/#{params[:id]}"].put(payload) { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end
@@ -66,11 +60,10 @@ class Api::V1::WidgetsController < ApplicationController
   # //MARK: Widget Destroy
   def destroy
     begin
-      response = @service.widgets["/#{params[:id]}"].delete
-      
-      data = check_response(response)
-
-      render json: data
+      @service.widgets["/#{params[:id]}"].delete { |response| 
+        data = check_response(response) if response.code == 200
+        render json: data || response, status: response.code
+      }
     rescue => e
       exception_handler_func(e)
     end
