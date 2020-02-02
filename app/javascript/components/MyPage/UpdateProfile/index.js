@@ -35,9 +35,7 @@ export default function UpdateProfile({showProfile, handleCloseProfile}){
       Swal.fire({
         icon: 'success',
         text: 'User updated successfully'
-      })
-      setUser(data.user)
-      handleCloseProfile()
+      }).then(() => location.reload())
     }).catch(({response}) => {
       Swal.fire({
         icon: 'error',

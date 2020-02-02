@@ -54,7 +54,7 @@ export default function WidgetCatalog({widgets, setWidgets, catalogType}){
                 {widget.description}
               </Card.Text>
               { catalogType === "public" ?
-                <Card.Link href="#">Creator page</Card.Link>
+                <Card.Link href={`/user/${widget.user.id}`}>User page</Card.Link>
               :
                 <>
                   <Card.Link href="#" onClick={() => showModal(widget,i)}>Edit</Card.Link>
