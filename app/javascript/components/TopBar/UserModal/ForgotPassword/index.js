@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
+import Swal from "sweetalert2"
 
 import { MainContext } from "@/contexts/MainContext"
 import { ButtonGroup } from "../style"
@@ -13,8 +14,11 @@ export default function ForgotPassword({ setFormType, setError }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
-    await api.post('/api/v1/users/reset_password', {user: {email} }).then(res => {
-      console.log(res)
+    await api.post('/api/v1/users/reset_password', {user: {email} }).then(({data}) => {
+      Swal.fire({
+        icon: 'success',
+        text: data.message
+      })
     }).catch(({response}) => {
       setError(response.data.message)
     })

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
+import Swal from "sweetalert2"
 
 import { ButtonGroup } from "../style"
 import { MainContext } from "@/contexts/MainContext"
@@ -17,7 +18,10 @@ export default function LoginForm({ setFormType, setError }){
     e.preventDefault()
     setLoading(true)
     await api.post('/api/v1/auth', loginForm).then(res => {
-      setLogged(true)
+      Swal.fire({
+        icon: 'success',
+        text: 'Logged in successfully'
+      }).then(() => setLogged(true))
     }).catch(({response}) => {
       setError(response.data.message)
     })

@@ -16,7 +16,7 @@ import WidgetForm from "@components/WidgetForm"
 import UpdateProfile from "./UpdateProfile"
 import ChangePassword from "./ChangePassword"
 
-export default function MyPage(){
+export default function MyPage({history}){
   const {user,setLoading} = useContext(MainContext)
   const [widgets, setWidgets] = useState([])
   const [search, setSearch] = useState('')
@@ -35,7 +35,7 @@ export default function MyPage(){
       Swal.fire({
         icon: 'error',
         text: response.data.message
-      })
+      }).then(() => history.push('/'))
     })
   }, [])
 

@@ -12,7 +12,7 @@ import { MainContext } from "@/contexts/MainContext"
 import api from "@src/api"
 import WidgetCatalog from "@components/WidgetCatalog"
 
-export default function UserPage({match}){
+export default function UserPage({match, history}){
   const {setLoading} = useContext(MainContext)
   const [user, setUser] = useState({})
   const [widgets, setWidgets] = useState([])
@@ -27,13 +27,13 @@ export default function UserPage({match}){
         Swal.fire({
           icon: 'error',
           text: response.data.message
-        })
+        }).then(() => history.push('/'))
       })
-    }).catch(({reponse}) => {
+    }).catch(({response}) => {
       Swal.fire({
         icon: 'error',
         text: response.data.message
-      })
+      }).then(() => history.push('/'))
     })
 
   }, [])
