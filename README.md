@@ -1,24 +1,29 @@
-# README
+# Widget App
+### Development
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Want to contribute? Great!
+The application requires Ruby on Rails and React to run.
 
-Things you may want to cover:
+Install the dependencies.
 
-* Ruby version
+```sh
+$ cd widget_app
+$ bundle install
+$ yarn install
+```
 
-* System dependencies
+Start your server:
+```sh
+rails s
+```
 
-* Configuration
+### Test specs
 
-* Database creation
+Execute the command below to run the tests.
 
-* Database initialization
+```sh
+rspec spec
+```
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+   
