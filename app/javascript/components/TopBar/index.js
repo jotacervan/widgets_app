@@ -3,11 +3,13 @@ import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
 import Container from "react-bootstrap/Container"
 import NavDropdown from "react-bootstrap/NavDropdown"
+import Image from "react-bootstrap/Image"
 import Swal from "sweetalert2"
 
 import { MainContext } from "@/contexts/MainContext"
 import UserModal from "./UserModal"
 import api from "@src/api"
+import { MainContainer } from "./style"
 
 export default function TopBar(){
   const [loginModal, setLoginModal] = useState(false)
@@ -15,6 +17,7 @@ export default function TopBar(){
 
   const handleOpen = () => setLoginModal(true)
   const handleClose = () => setLoginModal(false)
+  
   const handleLogout = () => {
     api.post('/api/v1/auth/revoke').then(res => {
       setLogged(false)
@@ -28,28 +31,34 @@ export default function TopBar(){
   }
 
   return(
-    <Navbar bg="dark" variant="dark">
-      <Container>
-        <Navbar.Brand href="/">Widget App</Navbar.Brand>
-        <Nav className="justify-content-end" activeKey="/home">
-          <Nav.Item>
-            { logged ? 
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">My Widgets</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">New Widget</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Profile</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href={void(0)} onClick={handleLogout}>Logout</NavDropdown.Item>
-              </NavDropdown>
-            :
-              <>
-                <Nav.Link href={void(0)} onClick={handleOpen} >Login</Nav.Link>
-                <UserModal loginModal={loginModal} handleClose={handleClose} /> 
-              </>
+    <MainContainer>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="/">Widget App</Navbar.Brand>
+          <Nav className="justify-content-end" activeKey="/home">
+            { logged && user.images &&
+              <Nav.Item>
+                <Image className="thumb-user" src={user.images.small_url} thumbnail roundedCircle />
+              </Nav.Item>
             }
-          </Nav.Item>
-        </Nav>
-      </Container>
-    </Navbar>
+            <Nav.Item>
+              { logged ? 
+                <NavDropdown title="Menu" id="basic-nav-dropdown">
+                  <NavDropdown.Item href={void(0)}>My Page</NavDropdown.Item>
+                  <NavDropdown.Item href={void(0)}>New Widget</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href={void(0)} onClick={handleLogout}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              :
+                <>
+                  <Nav.Link href={void(0)} onClick={handleOpen} >Login</Nav.Link>
+                  <UserModal loginModal={loginModal} handleClose={handleClose} /> 
+                </>
+              }
+            </Nav.Item>
+          </Nav>
+        </Container>
+      </Navbar>
+    </MainContainer>
   )
 }
