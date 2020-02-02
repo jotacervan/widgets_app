@@ -24,7 +24,7 @@ export default function Widget(){
       setLoading(false)
       Swal.fire({
         icon: 'Error',
-        text: response.message
+        text: response.data.message
       })
     })
   }, [])
@@ -37,7 +37,7 @@ export default function Widget(){
     }).catch(({response}) => {
       Swal.fire({
         icon: 'Error',
-        text: response.message
+        text: response.data.message
       })
     })
     setLoading(false)

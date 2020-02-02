@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form"
 import FormControl from "react-bootstrap/FormControl"
 import Image from "react-bootstrap/Image"
 import Button from "react-bootstrap/Button"
+import Dropdown from "react-bootstrap/Dropdown"
 import Alert from "react-bootstrap/Alert"
 import Swal from "sweetalert2"
 
@@ -13,6 +14,7 @@ import api from "@src/api"
 import WidgetCatalog from "@components/WidgetCatalog"
 import WidgetForm from "@components/WidgetForm"
 import UpdateProfile from "./UpdateProfile"
+import ChangePassword from "./ChangePassword"
 
 export default function MyPage(){
   const {user,setLoading} = useContext(MainContext)
@@ -20,9 +22,11 @@ export default function MyPage(){
   const [search, setSearch] = useState('')
   const [showCreate, setShowCreate] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
+  const [changePassword, setChangePassword] = useState(false)
 
   const handleCloseWidget = () => setShowCreate(false)
   const handleCloseProfile = () => setShowProfile(false)
+  const handleClosePassword = () => setChangePassword(false)
 
   useEffect(() => {
     api.get('/api/v1/users/me/widgets').then(({data}) => {
@@ -30,7 +34,7 @@ export default function MyPage(){
     }).catch(({response}) => {
       Swal.fire({
         icon: 'error',
-        text: response.message
+        text: response.data.message
       })
     })
   }, [])
@@ -43,7 +47,7 @@ export default function MyPage(){
     }).catch(({response}) => {
       Swal.fire({
         icon: 'Error',
-        text: response.message
+        text: response.data.message
       })
     })
     setLoading(false)
@@ -54,13 +58,30 @@ export default function MyPage(){
       <div className="header">
         <div className="profile-header">
           <Image className="profile-picture" src={user.images.medium_url} thumbnail roundedCircle />
-          <h3>Hello {user.name}</h3>
+          <div>
+            <h3>Hello {user.name}</h3>
+            <p>{user.email}</p>
+          </div>
         </div>
         
         <div className="profile-buttons">
-          <Button variant="dark" onClick={() => setShowProfile(true)}>Update Profile</Button>
+          <Dropdown>
+            <Dropdown.Toggle variant="dark" id="dropdown-basic">
+              Update
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#" onClick={() => setShowProfile(true)}>Profile Infos</Dropdown.Item>
+              <Dropdown.Item href="#" onClick={() => setChangePassword(true)}>Change Password</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
           <Button variant="dark" onClick={() => setShowCreate(true)}>Create Widget</Button>
         </div>
+
+        <ChangePassword 
+          changePassword={changePassword} 
+          handleClosePassword={handleClosePassword} 
+        />
 
         <UpdateProfile 
           showProfile={showProfile} 
