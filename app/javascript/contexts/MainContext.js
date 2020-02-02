@@ -11,6 +11,7 @@ export default function MainProvider({ children, loggedIn }) {
 
   useEffect(() => {
     if(logged){
+      setLoading(true)
       api.get('/api/v1/users/me').then(res => {
         setUser(res.data.user)
         setLoading(false)

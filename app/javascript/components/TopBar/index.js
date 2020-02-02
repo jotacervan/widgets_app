@@ -44,8 +44,7 @@ export default function TopBar(){
             <Nav.Item>
               { logged ? 
                 <NavDropdown title="Menu" id="basic-nav-dropdown">
-                  <NavDropdown.Item href={void(0)}>My Page</NavDropdown.Item>
-                  <NavDropdown.Item href={void(0)}>New Widget</NavDropdown.Item>
+                  <NavDropdown.Item href="/my_page">My Page</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href={void(0)} onClick={handleLogout}>Logout</NavDropdown.Item>
                 </NavDropdown>

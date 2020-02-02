@@ -9,9 +9,4 @@ export const Container = styled.div`
     flex-wrap: wrap;
     justify-content:space-evenly;
   }
-
-  .thumb-user{
-    width:30px;
-    margin-right:10px;
-  }
 `
